@@ -1,0 +1,32 @@
+{
+  "name": "react-test-without-cra",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "build:dev": "webpack --mode='development'",
+    "build:prod": "webpack --mode='production'",
+    "dev": "webpack serve --progress --mode development",
+    "start": "webpack-serve"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "devDependencies": {
+    "@babel/core": "^7.16.7",
+    "@babel/preset-env": "^7.16.7",
+    "@babel/preset-react": "^7.16.7",
+    "babel-loader": "^8.2.3",
+    "html-webpack-plugin": "^5.5.0",
+    "webpack": "^5.65.0",
+    "webpack-cli": "^4.9.1",
+    "webpack-dev-server": "^4.7.2"
+  },
+  "dependencies": {
+    "clean-webpack-plugin": "^4.0.0",
+    "react": "^17.0.2",
+    "react-dom": "^17.0.2",
+    "webpack-server": "^0.1.2"
+  }
+}
