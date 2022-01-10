@@ -1,7 +1,8 @@
 import React from "react";
 
 const App = () => {
-  return <div>React App Without CRA!-----!</div>;
+  return <div className="app">React App Without CRA!-----!</div>;
 };
 
 export default App;
+ 

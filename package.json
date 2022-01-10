@@ -7,8 +7,7 @@
     "test": "echo \"Error: no test specified\" && exit 1",
     "build:dev": "webpack --mode='development'",
     "build:prod": "webpack --mode='production'",
-    "dev": "webpack serve --progress --mode development",
-    "start": "webpack-serve"
+    "dev": "webpack serve --progress --mode development"    
   },
   "keywords": [],
   "author": "",
@@ -30,3 +29,4 @@
     "webpack-server": "^0.1.2"
   }
 }
+
