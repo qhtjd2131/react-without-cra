@@ -5,7 +5,7 @@ const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 module.exports = {
   mode: "development",
   entry: "./src/index.js",
-  target : ['browserslist'],
+  target: ["browserslist"],
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
@@ -22,18 +22,20 @@ module.exports = {
       {
         test: /\.js$/,
         exclude: /node_modules/,
-        use: {
-          loader: "babel-loader",
-          options: {
-            presets: ["@babel/preset-env","@babel/preset-react"],
-          },
+        loader: "babel-loader",
+        options: {
+          presets: ["@babel/preset-env", "@babel/preset-react"],
         },
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
       },
     ],
   },
   devServer: {
-   host: 'localhost',
-   port: 8080,
-   open: true, //개발 서버 실행 시 브라우저 오픈
- },
+    host: "localhost",
+    port: 8080,
+    open: true, //개발 서버 실행 시 브라우저 오픈
+  },
 };

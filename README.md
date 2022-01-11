@@ -48,6 +48,8 @@ Node.js 에서 사용하는 모듈을 패키지로 관리하기 위해 `package.
 
 ![image](https://user-images.githubusercontent.com/34260967/148720685-7ea5d9e1-075b-4a69-95fc-81809bfe5aea.png) <br>
 
+*`App.css`파일도 추가되었음.
+
 `public`, `src` 디렉토리를 생성하고, 하위 파일도 똑같이 구성해주자.
 
 **index.html**
@@ -71,10 +73,15 @@ Node.js 에서 사용하는 모듈을 패키지로 관리하기 위해 `package.
 **App.js**
 ```javascript
 //react 모듈 설치 후 작성할 것입니다.
-
 ```
 
+**App.css**
+```javascript
+//react 모듈 설치 후 작성할 것입니다.
+```
 
+<br>
+<br>
 
 **필요한 모듈은 무엇인가?**
 그렇다면 React App을 구동하기 위해서는 어떤 모듈이 필요할까? Node.js 프로젝트가 React 프로젝트가 되기 위해서는 아래와 같은 세가지 모듈이 필요하다.
@@ -121,6 +128,15 @@ const App = () => {
 
 export default App;
 ```
+
+**App.css**
+```css
+.app {
+    background-color: yellow;
+    color : blue;
+}
+```
+
 ---
 
 ## webpack v5.x
@@ -178,7 +194,7 @@ https://webpack.kr/guides/getting-started/
 웹팩은 번들링을 하기위해 Loader라는 것을 사용한다. 서로 다른 확장자를 번들링 하기위해서는 각각의 Loader가 필요하다. 
 
 - React의  `.js` 파일 : `babel-loader`이 필요하다.
-- css 파일 : `styled-loader`, `css-loader` 이 필요하다.
+- css 파일 : `style-loader`, `css-loader` 이 필요하다.
 
 ```
 npm install --save -dev babel-loader style-loader css-loader
@@ -264,7 +280,7 @@ module.exports = {
 mode: 'development'
 ```
 mode는 webpack 번들링을 어떤 방향으로 최적화 할것인가를 정의한다. mode의 종류에는 `development`,`production`,`none`이 있다. 이 프로젝트에서는 개발모드인 `development`를 사용하면 된다. 기본값은 `production`모드인데 따로 설정하지 않으면 warning을 표시하므로 가급적 설정해주자. 자세한 내용은 아래 공식문서를 참고하자.<br>
-[webpack : mode](https://webpack.kr/configuration/mode/)
+webpack mode : https://webpack.kr/configuration/mode/
 
 <br>
 
@@ -293,8 +309,8 @@ target 필드는 어떤 환경을 대상으로 번들링할 것인가를 정의�
 ```
 `browserslist`에 관한 자세한 설명은 아래 링크를 보면된다. 
 
-[browserslist](https://github.com/browserslist/browserslist#query-composition)
-[webpack : target](https://webpack.js.org/concepts/targets/)
+browserslist : https://github.com/browserslist/browserslist#query-composition<br>
+webpack target : https://webpack.js.org/concepts/targets/
 
 
 <br><br>
@@ -323,7 +339,8 @@ webpack의 플러그인을 사용하기 위해서는 `webpack.config.js` 파일�
 `new` 키워드를 사용하여 옵션이 포함된 플러그인 인스턴스를 생성하여 적용하는 듯 하다. 그래서 따로 옵션을 적용하기위해서는 파라미터로 전달해야한다.
 
 파라미터의 필드는 아래 링크에서 소개되어있다. 
-[html-webpack-plugin option](https://github.com/jantimon/html-webpack-plugin#options)
+html-webpack-plugin option :
+ https://github.com/jantimon/html-webpack-plugin#options
 
 <br><br>
 
@@ -331,27 +348,33 @@ webpack의 플러그인을 사용하기 위해서는 `webpack.config.js` 파일�
 ```javascript
 module: {
     rules: [
-        {
-            test: /\.js$/,
-            exclude: /node_modules/,
-            use: {
-                loader: "babel-loader",
-                options: {
-                    presets: ["@babel/preset-env","@babel/preset-react"],
-                },
-            },
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader",
+        options: {
+          presets: ["@babel/preset-env", "@babel/preset-react"],
         },
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
     ],
 },
 ```
+webpack에서 외부 모듈인 loader를 사용하기 위해서는 `module`필드에 명시해주어야한다.
 
+또한 webpack은 번들러이기 때문에 어떤 확장자의 파일을 어떤 모듈을 사용하여 어떤 조건으로 번들링을 할것인지에 대한 `rules`가 필요하다. 그래서 특정 확장자의 파일을 처리하기 위한 하나의 `rule`이 모여 배열형태로 정의된다.
 
-//  webpack config에 loader 적용 설명
-// 
-//
-//
-//
-//
+- test : loader를 사용해 처리할 확장자를 정규식 형태로 표현
+- include : babel로 컴파일 할 폴더나 파일
+- exlclude : babel의 컴파일에서 제외될 폴더나 파일
+- loader : 사용할 loader
+- options : loader의 옵션
+- use : 다수의 loader을 적용할 때 사용, 가장 오른쪽 로더부터 사용됨.
+
+webpack config 공식 : https://webpack.js.org/configuration/
 
 <br><br>
 
@@ -360,32 +383,65 @@ module: {
 ```javascript
 devServer: {
    host: 'localhost',
-   port: 8080,
+   port: 8080,  //포트
    open: true, //개발 서버 실행 시 브라우저 오픈
 },
 ```
-//  webpack config에 devServer 옵션설정 설명
-// 
-//
-//
-//
-//
 
+local에서 실행될 dev-server의 설정이다. `webpack-dev-server`를 사용하여 서버를 구동하므로 `webpack.config.js`에 정의해야한다. 나는 `create-react-app`처럼 서버 구동시 새창에서 열리기를 원하여 위와 같은 설정을 하였다. React App이 실행되기위한 최소환의 세팅은 아니지만 알아두자.
 
 <br><br>
 
 **결과**
 
-//  결과적으로 나온 webpack config 의 모습
-// 
-//
-//  지금은 기본적인 것만 최소한으로 적용했지만, 정상적인 프로젝트를 진행하기엔 무리라는것을 설명.
-//
-//
-// 정상적인 프로젝트를 진행하기위해선 다양한 플러그인과 로더가 필요하다는거 설명 
+**webpack.config.js 설정 후**
+```javascript
+const path = require("path");
+const HtmlWebPackPlugin = require("html-webpack-plugin");
+const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
+module.exports = {
+  mode: "development",
+  entry: "./src/index.js",
+  target: ["browserslist"],  //package.json 에 정의됨
+  output: {
+    filename: "main.js",
+    path: path.resolve(__dirname, "dist"),
+  },
+  plugins: [
+    new CleanWebpackPlugin(),
+    new HtmlWebPackPlugin({
+      template: path.resolve(__dirname, "public/index.html"),
+      filename: "index.html",
+    }),
+  ],
+  module: {
+    rules: [
+      {
+        test: /\.js$/,
+        exclude: /node_modules/,
+        loader: "babel-loader",
+        options: {
+          presets: ["@babel/preset-env", "@babel/preset-react"],
+        },
+      },
+      {
+        test: /\.css$/,
+        use: ["style-loader", "css-loader"],
+      },
+    ],
+  },
+  devServer: {
+    host: "localhost",
+    port: 8080,
+    open: true, //개발 서버 실행 시 브라우저 오픈
+  },
+};
+```
+
+HTML, CSS, JavaScript 를 사용하는 기본적인 React App을 화면에 랜더링 하기위해 가장 기본적인 설정을 했다. 이 설정으로 일반적인 프로젝트를 진행하기는 힘들것이다. TypeScript, SASS, Styled-Components, Image 등을 처리하기 위해서는 다양한 플러그인과 로더가 필요하므로 상황에 맞게 알아보고 추가하자.
+ 
 <br>
-
 
 **참고**
 - webpack 공식문서 : 
@@ -420,27 +476,53 @@ npm install --save-dev @babel/core @babel/preset-env @babel/preset-react
 - @babel/preset-env: ES6+ 코드를 이하 버전(ES5)로 변환해주는 라이브러리
 - @babel/preset-react: JSX 코드를 JS로 변환해주는 라이브러리
 
-
-
 ---
-## 설정
+## 서버 구동
 
 ### package.json 설정
 
+`webpack-dev-server`를 실행시키기 위해서는 `package.json`의 `script` 필드에 실행명령어를 추가해야한다.
 
+```json
+"scripts": {
+    "dev": "webpack serve"
+},
+```
+
+그리고 터미널에 `npm run` 키워드와 함께 설정한 `script`를 사용하면 된다.
+
+```
+npm run dev
+```
+
+### 화면
+
+<img src="https://user-images.githubusercontent.com/34260967/149007185-920d274b-0d8b-4601-84ab-25984b3a4b61.png
+" width="100%">
+
+---
+## 참고
+
+세부정보 보다는 전체적인 흐름을 참고하였습니다.
+
+https://medium.com/@_diana_lee/cra%EC%97%86%EC%9D%B4-%EB%A6%AC%EC%95%A1%ED%8A%B8-%ED%94%84%EB%A1%9C%EC%A0%9D%ED%8A%B8-%EC%8B%9C%EC%9E%91%ED%95%98%EA%B8%B0-feat-%EC%9B%B9%ED%8C%A9-%EB%B0%94%EB%B2%A8-74f5bc3c5da1<br>
+
+https://velog.io/@kmlee95/CRA%EC%97%86%EC%9D%B4-React%ED%99%98%EA%B2%BD-%EA%B5%AC%EC%B6%95%ED%95%98%EA%B8%B0
+<br>
 
 ---
 
+### 이번 프로젝트를 하면서...
+- React의 동작 방식
+- Webpack의 동작방식
+- Webpack Config 설정법
+- babel의 동작방식
+- Webpack과 babel이 어떻게 연결되면서 동작하는가
+
+### 다음 프로젝트에서는..
+- typescript 적용
+- file-loader 적용
+- styled-components 적용
+- 위 사항을 모두 적용하여 cra 없이 간단한 프로젝트 진행
 
 
-//to do
-<!-- webpack plugin 설치  -->
-plugin 설치후 config파일작성
-babel-loader 적용 : https://webpack.js.org/loaders/babel-loader/#usage
-file-loader설치
-
-크로스브라우징문제해결
-webpack.config.js에 target설정
-
-package.json에 browserlist 정의
-https://create-react-app.dev/docs/supported-browsers-features/
