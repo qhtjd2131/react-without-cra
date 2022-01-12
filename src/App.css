@@ -12,3 +12,34 @@ img {
     width: 200px;
     height: 200px;
 }
+.background-image{
+
+    width: 400px;
+    height : 400px;
+    background-image: url("./194_bartsimpson1.jpg");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position:  center;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 700;
+}
+
+.background-image2{
+
+    width: 400px;
+    height : 400px;
+    background-image: url("https://user-images.githubusercontent.com/34260967/149068669-19c513da-cf57-48df-b6e4-4efa37db2869.png");
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position:  center;
+
+    display:flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 22px;
+    font-weight: 700;
+}

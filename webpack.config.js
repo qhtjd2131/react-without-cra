@@ -32,8 +32,13 @@ module.exports = {
         use: ["style-loader", "css-loader"],
       },
       {
-         test: /\.(png|jpe?g)$/,
-         type: "asset/resource",
+        test: /\.(png|jpe?g|svg)$/,
+        type: "asset",
+        parser: {
+          dataUrlCondition: {
+            maxSize: 8 * 1024, // 8kb
+          },
+        },
       },
     ],
   },
