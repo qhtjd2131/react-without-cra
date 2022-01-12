@@ -6,6 +6,7 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "dev": "webpack serve",
+    "start": "webpack serve",
     "build": "webpack -w"
   },
   "keywords": [],
@@ -16,6 +17,7 @@
     "@babel/preset-env": "^7.16.7",
     "@babel/preset-react": "^7.16.7",
     "babel-loader": "^8.2.3",
+    "clean-webpack-plugin": "^4.0.0",
     "css-loader": "^6.5.1",
     "html-webpack-plugin": "^5.5.0",
     "style-loader": "^3.3.1",
@@ -24,10 +26,8 @@
     "webpack-dev-server": "^4.7.2"
   },
   "dependencies": {
-    "clean-webpack-plugin": "^4.0.0",
     "react": "^17.0.2",
-    "react-dom": "^17.0.2",
-    "webpack-server": "^0.1.2"
+    "react-dom": "^17.0.2"
   },
   "browserslist": {
     "production": [
