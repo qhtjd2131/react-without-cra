@@ -2,10 +2,15 @@ const path = require("path");
 const HtmlWebPackPlugin = require("html-webpack-plugin");
 const { CleanWebpackPlugin } = require("clean-webpack-plugin");
 
+const createStyledComponentsTransformer =
+  require("typescript-plugin-styled-components").default;
+const styledComponentsTransformer = createStyledComponentsTransformer();
+
 module.exports = {
   mode: "development",
   entry: "./src/index.js",
   target: ["browserslist"],
+  // target: ['web', 'es6'],
   output: {
     filename: "main.js",
     path: path.resolve(__dirname, "dist"),
@@ -21,7 +26,6 @@ module.exports = {
     rules: [
       {
         test: /\.js$/,
-        exclude: /node_modules/,
         loader: "babel-loader",
         options: {
           presets: ["@babel/preset-env", "@babel/preset-react"],
@@ -40,8 +44,30 @@ module.exports = {
           },
         },
       },
+      {
+        test: /\.tsx?$/,
+        use: [
+          // {
+          //   loader: "babel-loader",
+          //   options: {
+          //     cacheDirectory: true,
+          //     presets: ["@babel/preset-env", "@babel/preset-react"],
+          //   },
+          // },
+          {
+            loader: "ts-loader",
+            options: {
+              getCustomTransformers: () => ({
+                before: [styledComponentsTransformer],
+              }),
+            },
+          },
+        ],
+        exclude: /node_modules/,
+      },
     ],
   },
+
   devServer: {
     host: "localhost",
     port: 8080,
